@@ -1,0 +1,121 @@
+---
+title: "Merge Multiple Single cell data"
+author: "Anan"
+date: "2024-03-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+#library(CellChat)
+#library(tidyverse)
+#library(Seurat)
+#options(stringsAsFactors = FALSE)
+
+#install.packages('curl')
+#library(curl)
+```
+
+```{r}
+#library(Seurat)
+#library(Matrix)
+#library(stringr)
+```
+
+```{r}
+#list.files()
+#setwd("/Users/ahuang/Desktop/Bioinformatics/2024_03_18_Single_Cell_Demo/Anan22#032024/data/data")
+#getwd()
+```
+
+```{r}
+#fs = list.files("./",'^GSM')
+#fs
+```
+
+```{r}
+#samples = str_split(fs, '_', simplify = T)[,2]
+#unique(samples)
+```
+
+
+
+
+
+
+```{r}
+#lapply(unique(samples),function(x){
+#  y=fs[grepl(x,fs)]
+#  folder=paste(str_split(y[1],'_',simplify = T)[,2],collapse = '')
+#  dir.create(folder,recursive = T)
+#  file.rename(y[1],file.path(folder,"barcodes.tsv.gz"))
+#  file.rename(y[2],file.path(folder,"features.tsv.gz")) #注意版本
+#  file.rename(y[3],file.path(folder,"matrix.mtx.gz"))
+#})
+
+#folders=list.files("./")
+#folders
+```
+
+
+```{r}
+# 获取当前工作目录下所有子文件夹的路径
+#subfolders <- list.dirs(full.names = TRUE, recursive = TRUE)
+
+# 循环遍历每个子文件夹
+#for (subfolder in subfolders) {
+  # 获取当前子文件夹下所有的feature.tar.gz文件路径
+#  tar_files <- list.files(path = subfolder, pattern = "feature.tar.gz", #full.names = TRUE)
+  
+  # 循环遍历每个feature.tar.gz文件
+#  for (file in tar_files) {
+    # 生成新文件名，将下划线替换为破折号
+#    new_name <- gsub("_", "-", file)
+    
+    # 重命名文件
+#    file.rename(from = file, to = new_name)
+#  }
+#}
+
+```
+
+
+#生成Seurat文件
+```{r}
+#sceList = lapply(folders,function(folder){ 
+#  CreateSeuratObject(counts = Read10X(folder), 
+#                     project = folder )
+#})
+```
+
+#Merge seurat文件
+```{r}
+#sce.all <- merge(sceList[[1]], 
+#                 y = c(sceList[[2]],sceList[[3]],sceList[[4]],sceList[[5]],
+                       #sceList[[6]],sceList[[7]],sceList[[8]],sceList[[9]],sceList[[10]],
+                       #sceList[[11]],sceList[[12]],sceList[[13]],sceList[[14]],sceList[[15]],
+#                       sceList[[16]]), 
+#                 add.cell.ids = folders, #添加样本名
+#                 project = "scRNA")
+#sce.all #查看
+```
+
+
+
+
+
+
+
+
+
+
+
