@@ -1,0 +1,105 @@
+---
+title: "Slingshot"
+author: "Anan"
+date: "2024-04-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+#file comes from https://mp.weixin.qq.com/s/pRRx30I9fAH5qK14WVLOnQ
+rm(list = ls())
+```
+
+```{r}
+#BiocManager::install("slingshot", ask = F, update = F)
+```
+
+```{r}
+#install.packages("mclust")
+```
+
+```{r}
+
+library(slingshot)
+library(tidyverse)
+library(uwot)
+library(mclust)
+library(RColorBrewer)
+library(grDevices)
+```
+
+
+```{r}
+data("slingshotExample")
+rd <- slingshotExample$rd
+cl <- slingshotExample$cl
+```
+
+```{r}
+dim(rd)
+length(cl)
+```
+
+
+
+```{r}
+lin1 <- getLineages(rd, cl, start.clus = "1")
+lin1
+```
+
+```{r}
+plot(rd, col = brewer.pal(9, "Set1")[cl], asp = 1, pch =16)
+lines(SlingshotDataSet(lin1), lwd = 3, col = "black")
+```
+
+```{r}
+lin2 <- getLineages(rd, cl, start.clus = "1", end.clus = "3")
+plot(rd, col = brewer.pal(9, "Set1")[cl],asp =1, pch = 16)
+lines(SlingshotDataSet(lin2), lwd = 3, col = "black", show.constraint = T)
+```
+
+
+```{r}
+crv1 <- getCurves(lin1)
+crv1
+```
+
+
+```{r}
+plot(rd, col = brewer.pal(9, "Set1")[cl],asp =1, pch = 16)
+lines(SlingshotDataSet(crv1), lwd = 3, col = "black", show.constraint = T)
+```
+
+
+```{r}
+rd2 <- rbind(rd, cbind(rd[,2]-12, rd[,1]-6))
+cl2 <- c(cl, cl + 10)
+pto2 <- slingshot(rd2, cl2, omega = T, start.clus = c(1,11))
+
+plot(rd2, pch=16, asp = 1,
+     col = c(brewer.pal(9,"Set1"), brewer.pal(8,"Set2"))[cl2])
+lines(SlingshotDataSet(pto2), type = 'l', lwd=2, col='black')
+```
+
+
+```{r}
+plot(rd2, pch=16, asp = 1,
+     col = c(brewer.pal(9,"Set1"), brewer.pal(8,"Set2"))[cl2])
+lines(SlingshotDataSet(pto2), lwd=2, col='black')
+```
+
+
+
+
+
+
